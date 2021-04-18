@@ -12,9 +12,9 @@ This application does
 
 ## APIs used by this application
 
-* Used to display the initial article result by specifying the page number
+* Used the below API to display the initial article result by specifying the page number
     * https://content-store.explore.bfi.digital/api/articles?page=1
-* Used this api to filter based on author or article type:
+* Used these api to filter based on author or article type:
     * https://content-store.explore.bfi.digital/api/articles?author={author-id}
     * https://content-store.explore.bfi.digital/api/articles?type={review-id}
     * https://content-store.explore.bfi.digital/api/articles?author={author-id}&type={review-id}
