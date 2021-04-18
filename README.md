@@ -13,14 +13,14 @@ This application does
 ## APIs used by this application
 
 * Used to display the initial article result by specifying the page number
-https://content-store.explore.bfi.digital/api/articles?page=1
+    * https://content-store.explore.bfi.digital/api/articles?page=1
 * Used this api to filter based on author or article type:
     * https://content-store.explore.bfi.digital/api/articles?author={author-id}
     * https://content-store.explore.bfi.digital/api/articles?type={review-id}
     * https://content-store.explore.bfi.digital/api/articles?author={author-id}&type={review-id}
 * Created filter based on these APIs
-    https://content-store.explore.bfi.digital/api/types
-    https://content-store.explore.bfi.digital/api/authors
+    * https://content-store.explore.bfi.digital/api/types
+    * https://content-store.explore.bfi.digital/api/authors
 
 ## Application Tech stack
 * React
