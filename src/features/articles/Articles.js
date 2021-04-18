@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BookContainer } from './Articles.styles';
 import Card from './Card';
 import ReactPaginate from 'react-paginate';
@@ -7,30 +7,55 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   articleAsync,
   getArticleCollections,
+  getCurrentPage,
   getIsLoaded,
   getTotal,
   toggleOverlay,
+  setCurrentPage,
+  getIsFiltered,
+  getApiUrl,
+  toggleIsFiltered,
 } from './articlesSlice';
 
 function Articles() {
   const articlesCollections = useSelector(getArticleCollections);
   const pageCount = useSelector(getTotal);
   const isLoaded = useSelector(getIsLoaded);
-  const [currentPage, setcurrentPage] = useState(0);
+  const currentPage = useSelector(getCurrentPage);
+  const isFiltered = useSelector(getIsFiltered);
+  const apiUrl = useSelector(getApiUrl);
 
   const dispatch = useDispatch();
 
-  const URL = `https://content-store.explore.bfi.digital/api/articles?page=${
+  let URL = `https://content-store.explore.bfi.digital/api/articles?page=${
     currentPage + 1
   }`;
+
+  useEffect(() => {
+    if (isFiltered) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      URL = `${apiUrl}&page=${currentPage + 1}`;
+    }
+  });
 
   useEffect(() => {
     dispatch(articleAsync(URL));
   }, [URL]);
 
+  /**
+   * Summary: Set the current page from the pagination.
+   * @param {object}   selectedObject.selected is current page which we get from callback of react-paginate.
+   * @return no return value.
+   */
   const handlePageChange = (selectedObject) => {
-    setcurrentPage(selectedObject.selected);
+    dispatch(setCurrentPage(selectedObject.selected));
   };
+
+  /**
+   * Summary: Creates the Card component from the articleCollections from the redux store.
+   * @param {object}   no params.
+   * @return {array} created Card components and returns the presentation card.
+   */
 
   const getCards = () => {
     return articlesCollections.map((card) => {
@@ -38,9 +63,20 @@ function Articles() {
     });
   };
 
+  /**
+   * Summary: dispatches toggleOverlay action to toggle the showOverlay from redux store value.
+   * @param no params.
+   * @return no return value.
+   */
   const handleShowOverlay = () => {
     dispatch(toggleOverlay());
   };
+
+  /**
+   * Summary: Dispatches articleAsync call the fetchArticle API to get the all the articles.
+   * @param no params.
+   * @return no return value.
+   */
 
   const handleClearFilter = () => {
     dispatch(
@@ -48,6 +84,8 @@ function Articles() {
         'https://content-store.explore.bfi.digital/api/articles?page=1'
       )
     );
+    dispatch(setCurrentPage(0));
+    dispatch(toggleIsFiltered(false));
   };
 
   return (

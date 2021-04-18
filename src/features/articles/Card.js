@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { extractAuthor } from '../../utilities/utils';
 import cx from 'classnames';
 
+/**
+ * Summary:- Presentation of Card.
+ * @param {object}   cardProps   Card data to display title, summary, image and author.
+ *
+ * @return {Component} Card component is returned.
+ */
+
 function Card({ ...cardProps }) {
   const [open, setOpen] = useState(false);
-
   const cardClassName = cx('card flex-row', { open });
   return (
-
     <div
       className={cardClassName}
       onMouseEnter={() => setOpen(true)}
